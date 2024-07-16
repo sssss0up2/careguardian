@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CareGuardian - Voice Assistant</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f2f2f6;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .voice-assistant {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            color: white;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .voice-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .voice-animation {
+            width: 200px;
+            height: 60px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .voice-bar {
+            width: 10px;
+            background-color: white;
+            border-radius: 5px;
+            animation: voiceWave 0.5s infinite ease-in-out alternate;
+        }
+        @keyframes voiceWave {
+            0% { height: 10px; }
+            100% { height: 50px; }
+        }
+        .voice-bar:nth-child(2) { animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { animation-delay: 0.3s; }
+        .voice-bar:nth-child(5) { animation-delay: 0.4s; }
+        .voice-input {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .voice-result {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .voice-result h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .voice-result p {
+            font-size: 16px;
+        }
+        .voice-button {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            color: #4facfe;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+        }
+        .common-questions {
+            margin-top: 20px;
+        }
+        .common-questions h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .question-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .question-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="voice-assistant">
+            <h2 class="voice-header">음성 도우미</h2>
+            <div class="voice-animation">
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+            </div>
+            <p class="voice-input">"체위변경 시간 알려주세요"</p>
+            <div class="voice-result">
+                <h3>답변:</h3>
+                <p>김환자님의 마지막 체위변경 시간은 2시간 전입니다. 지금 체위변경을 하는 것이 좋겠습니다.</p>
+            </div>
+            <button class="voice-button"><i class="fas fa-microphone"></i></button>
+            <div class="common-questions">
+                <h3>자주 묻는 질문</h3>
+                <button class="question-button">체위변경 시간 알려줘</button>
+                <button class="question-button">오늘의 관리 상태는?</button>
+                <button class="question-button">현재 욕창 위험 수준</button>
+                <button class="question-button">다음 약 복용 시간</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

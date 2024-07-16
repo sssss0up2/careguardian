@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CareGuardian - 설정</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+        .container {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .profile {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+        .profile-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4facfe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+        .profile-info h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .profile-info p {
+            font-size: 14px;
+            color: #8E8E93;
+        }
+        .settings-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .settings-section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        .settings-item-label {
+            font-size: 16px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4facfe;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: "\25BC";
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        select {
+            appearance: none;
+            width: 100px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 14px;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8E8E93;
+            text-decoration: none;
+            font-size: 10px;
+            position: relative;
+        }
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            color: #4facfe;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FF3B30;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>설정</h1>
+        </div>
+        <div class="profile">
+            <div class="profile-image">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h2>김환자 님</h2>
+                <p>patient@example.com</p>
+            </div>
+        </div>
+        <div class="settings-section">
+            <h2>알림 설정</h2>
+            <div class="settings-item">
+                <span class="settings-item-label">체위 변경 알림</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <span class="settings-item-label">피부 점검 알림</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <span class="settings-item-label">영양 섭취 알림</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="settings-section">
+            <h2>일반 설정</h2>
+            <div class="settings-item">
+                <span class="settings-item-label">언어</span>
+                <div class="select-wrapper">
+                    <select>
+                        <option>한국어</option>
+                        <option>English</option>
+                        <option>日本語</option>
+                    </select>
+                </div>
+            </div>
+            <div class="settings-item">
+                <span class="settings-item-label">다크 모드</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="settings-section">
+            <h2>개인정보 보호</h2>
+            <div class="settings-item">
+                <span class="settings-item-label">데이터 공유</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <span class="settings-item-label">위치 서비스</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <nav class="nav-bar">
+        <a href="관리화면.html" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>분석</span>
+        </a>
+        <a href="관리.html" class="nav-item">
+            <i class="fas fa-clipboard-list"></i>
+            <span>관리</span>
+        </a>
+        <a href="new thang.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>홈</span>
+        </a>
+        <a href="알림탭.html" class="nav-item">
+            <i class="fas fa-bell"></i>
+            <span>알림</span>
+            <span class="notification-badge">3</span>
+        </a>
+        <a href="설정.html" class="nav-item active">
+            <i class="fas fa-cog"></i>
+            <span>설정</span>
+        </a>
+    </nav>
+</body>
+</html>

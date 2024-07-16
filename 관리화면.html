@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CareGuardian - 데이터 분석 및 보고서</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+        .container {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        .graph-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .filter-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg fill="%234facfe" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center #fff;
+            background-size: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4facfe;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #3d8bfe;
+            transform: translateY(-2px);
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8E8E93;
+            text-decoration: none;
+            font-size: 10px;
+            position: relative;
+        }
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        .nav-item.active {
+            color: #4facfe;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FF3B30;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>데이터 분석 및 보고서</h1>
+        </div>
+        <div class="card">
+            <h2>욕창 위험도 변화 그래프</h2>
+            <select class="filter-select">
+                <option value="daily">일별</option>
+                <option value="weekly">주별</option>
+                <option value="monthly">월별</option>
+            </select>
+            <div class="graph-container">
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>주요 지표 요약 (최근 30일)</h2>
+            <div class="summary-item">
+                <span>평균 욕창 위험도:</span>
+                <strong>중간 (63%)</strong>
+            </div>
+            <div class="summary-item">
+                <span>관리 프로그램 완료율:</span>
+                <strong>78%</strong>
+            </div>
+            <div class="summary-item">
+                <span>주요 위험요인:</span>
+                <strong>부동, 영양불량</strong>
+            </div>
+            <div class="summary-item">
+                <span>평균 체위변경 간격:</span>
+                <strong>2.3시간</strong>
+            </div>
+        </div>
+        <div class="card">
+            <h2>요약 및 권장 사항</h2>
+            <p>최근 30일 간 욕창 위험도가 3% 상승했습니다. 체위변경 간격을 2시간으로 단축하고, 영양 섭취를 개선하는 것이 좋겠습니다. 또한, 부동 상태를 개선하기 위한 운동 프로그램을 고려해보세요.</p>
+        </div>
+        <div class="card">
+            <h2>세부 보고서</h2>
+            <button class="button"><i class="fas fa-file-pdf"></i> PDF 다운로드</button>
+            <button class="button"><i class="fas fa-share-alt"></i> 보고서 공유</button>
+        </div>
+    </div>
+    <nav class="nav-bar">
+        <a href="관리화면.html" class="nav-item active">
+            <i class="fas fa-chart-bar"></i>
+            <span>분석</span>
+        </a>
+        <a href="관리.html" class="nav-item">
+            <i class="fas fa-clipboard-list"></i>
+            <span>관리</span>
+        </a>
+        <a href="new thang.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>홈</span>
+        </a>
+        <a href="알림탭.html" class="nav-item">
+            <i class="fas fa-bell"></i>
+            <span>알림</span>
+            <span class="notification-badge">3</span>
+        </a>
+        <a href="설정.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>설정</span>
+        </a>
+    </nav>
+    <script>
+        var ctx = document.getElementById('riskChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1주차', '2주차', '3주차', '4주차'],
+                datasets: [{
+                    label: '욕창 위험도',
+                    data: [60, 62, 65, 63],
+                    borderColor: '#4facfe',
+                    backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
